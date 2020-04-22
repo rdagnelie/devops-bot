@@ -33,7 +33,7 @@ async def main():
     client_config = AsyncClientConfig(
         max_limit_exceeded=0,
         max_timeouts=0,
-        store_sync_tokens=True,
+        store_sync_tokens=False,
         encryption_enabled=config.enable_encryption,
     )
 

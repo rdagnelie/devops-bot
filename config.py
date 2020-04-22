@@ -63,7 +63,20 @@ class Config(object):
         self.homeserver_url = self._get_cfg(["matrix", "homeserver_url"], required=True)
         self.enable_encryption = self._get_cfg(["matrix", "enable_encryption"], default=False)
 
-        self.command_prefix = self._get_cfg(["command_prefix"], default="!c") + " "
+        #self.command_prefix = self._get_cfg(["command_prefix"], default="!c") + " "
+        self.command_prefix = self._get_cfg(["command_prefix"], default="!c") 
+
+        # mailboxes credentials
+        self.mailbox_name = self._get_cfg(["mailbox", "name"], required=False)
+        self.mailbox_folder = self._get_cfg(["mailbox", "folder"], required=False)
+        self.mailbox_host = self._get_cfg(["mailbox", "host"], required=False)
+        self.mailbox_username = self._get_cfg(["mailbox", "username"], required=False)
+        self.mailbox_password = self._get_cfg(["mailbox", "password"], required=False)
+
+        #BonjourMadame parameters
+        self.bonjourmadame_url_api = self._get_cfg(["bonjourmadame", "url_api"], required=False,default=False)
+        self.bonjourmadame_blacklist_pics = self._get_cfg(["bonjourmadame", "blacklist_pictures"], required=False,default=False)
+
 
     def _get_cfg(
             self,
