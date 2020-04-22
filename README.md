@@ -1,115 +1,88 @@
-# Nio Template
+# Documentation
 
-A template for creating bots with
-[matrix-nio](https://github.com/poljar/matrix-nio). The documentation for
-matrix-nio can be found
-[here](https://matrix-nio.readthedocs.io/en/latest/nio.html).
+## Bot interactions with network
 
-## Projects using nio-template
+### [DONE] - ```!ping google.fr 3```
+```
 
-* [anoadragon453/msc-chatbot](https://github.com/anoadragon453/msc-chatbot) - A matrix bot for matrix spec proposals
-* [anoadragon453/matrix-episode-bot](https://github.com/anoadragon453/matrix-episode-bot) - A matrix bot to post episode links
-* [TheForcer/vision-nio](https://github.com/TheForcer/vision-nio) - A general purpose matrix chatbot
+timestamp: 2020-04-13 23:51:33
+destination: google.fr
+packet_transmit: 3
+packet_receive: 3
+packet_loss_count: 0
+packet_loss_rate: 0.0
+rtt_min: 37.217
+rtt_avg: 40.25
+rtt_max: 43.23
+rtt_mdev: 2.466
+packet_duplicate_count: 0
+packet_duplicate_rate: 0.0
 
-Want your project listed here? [Edit this
-doc!](https://github.com/anoadragon453/nio-template/edit/master/README.md)
+```
+* replace ping with tcpping or hping3 ? 
+    * https://github.com/deajan/tcpping/blob/master/tcpping
+    * http://www.hping.org/ hping3
 
-## Project structure
+### [DONE] - ```!reach google.fr```
+```
+timestamp: 2020-04-13 23:54:20.396937
+url-target: https://google.fr
+http-return-code: 200
+namelookup-time: 0.185807
+connect-time: 0.269494
+Time-To-First-Byte: 0.565642
+total-time: 0.690115
+redirect-count: 1
+cert-health-(1=KO): 0
+```
 
-### `main.py`
+### [DONE] - ```!mbox or !mailbox``` AND ```!mbox clearall or !mailbox clearall```
+```
+!mbox
+2020-04-12 11:15:43+02:00: ${subject}
+!!! : 1 mail have been found in the mailbox !!!
+```
+```
+!mailbox clearall
+mailbox ${MAILBOXNAME} (${FOLDER_SELECTED}) has been cleared !
+```
+```
+!mbox
+:):):) 0 mails in the mailbox in the last 24h ${MAILBOXNAME} (${FOLDER_SELECTED})
+```
 
-Initialises the config file, the bot store, and nio's AsyncClient (which is
-used to retrieve and send events to a matrix homeserver). It also registering
-some callbacks on the AsyncClient to tell it to call some functions when
-certain events are received (such as an invite to a room, or a new message in a
-room the bot is in).
+### TODO - ```!scan IP.IP.IP.IP 22,80,443```
 
-It also starts the sync loop. Matrix clients "sync" with a homeserver, by
-asking constantly asking for new events. Each time they do, the client gets a
-sync token (stored in the `next_batch` field of the sync response). If the
-client provides this token the next time it syncs (using the `since` parameter
-on the `AsyncClient.sync` method), the homeserver will only return new event
-*since* those specified by the given token.
+It should give you clear overview if port is filtered with firewall,not routed or closed. 
+Nmap binary shoud be fine with a lot of options
 
-This token is saved and provided again automatically by using the
-`client.sync_forever(...)` method.
+## Bot interactions with compute
 
-### `config.py`
+### [DONE] - ```!uh or !uhash or !user_hash" or !userhash```
+``` $6$rounds=656000$x7XatslsbOoLxesw$ZV3Ju24qp47JEsubyB7CJ8eI2l8mE3L1DSee345lrdZ2doVZunXXhkw3kISrLk9vEvU2mXuL5SHyrbOnvUoGT1 ### .|\Wr|.ImO{$+6/5 ```
 
-This file reads a config file at a given path (hardcoded as `config.yaml` in
-`main.py`), processes everything in it and makes the values available to the
-rest of the bot's code so it knows what to do. Most of the options in the given
-config file have default values, so things will continue to work even if an
-option is left out of the config file. Obviously there are some config values
-that are required though, like the homeserver URL, username, access token etc.
-Otherwise the bot can't function.
+Return Linux standard hash password and after ### the clear password associated
 
-### `storage.py`
+### [DONE] - ```!mh or !mhash or !mysql_hash" or !mysqlhash```
+``` $5$rounds=535000$XP.V8wNQ3ium8AC8$sDXC4ib5RNTuTi/Or55kYaxxRm1pRCbhw/da435A.v4 ### ;A4EigyiqcpZ^DZ& ```
 
-Creates (if necessary) and connects to a SQLite3 database and provides commands
-to put or retrieve data from it. Table definitions should be specified in
-`_initial_setup`, and any necessary migrations should be put in
-`_run_migrations`. There's currently no defined method for how migrations
-should work though.
+Return mysql 8.X hash password and after ### the clear password associated
 
-### `callbacks.py`
 
-Holds callback methods which get run when the bot get a certain type of event
-from the homserver during sync. The type and name of the method to be called
-are specified in `main.py`. Currently there are two defined methods, one that
-gets called when a message is sent in a room the bot is in, and another that
-runs when the bot receives an invite to the room.
 
-The message callback function, `message`, checks if the message was for the
-bot, and whether it was a command. If both of those are true, the bot will
-process that command.
+# ROADMAP
+    * Feedback on redmines tickets where we want global communication:
+        * A tag on redmine could be catched by the bot and publicly annonce in #important channels the ticket title and body
+    * Zabbix monitoring alerts list with default filtering
+    * Get all tickets created with default filters from redmine
+    * Guided help/startup toolkit for new people who are new in my team / my company
+    * Coding Kamoulox projects
+    * BonjourMadame posts
+    * Famous punchline from famous actors ( C*** N*** , JCV , From our team .. etc )
+    * custom responses when errors occurs
 
-The invite callback function, `invite`, processes the invite event and attempts
-to join the room. This way, the bot will auto-join any room it is invited to.
+# Thanks to [nio-template project](https://github.com/anoadragon453/nio-template) !
 
-### `bot_commands.py`
+Easy starter kit to anybody want to begin automation of dumb and boring tasks !
 
-Where all the bot's commands are defined. New commands should be defined in
-`process` with an associated private method. `echo` and `help` commands are
-provided by default.
-
-A `Command` object is created when a message comes in that's recognised as a
-command from a user directed at the bot (either through the specified command
-prefix (defined by the bot's config file), or through a private message
-directly to the bot. The `process` command is then called for the bot to act on
-that command.
-
-### `message_responses.py`
-
-Where responses to messages that are posted in a room (but not necessarily
-directed at the bot) are specified. `callbacks.py` will listen for messages in
-rooms the bot is in, and upon receiving one will create a new `Message` object
-(which contains the message text, amongst other things) and calls `process()`
-on it, which can send a message to the room as it sees fit.
-
-A good example of this would be a Github bot that listens for people mentioning
-issue numbers in chat (e.g. "We should fix #123"), and the bot sending messages
-to the room immediately afterwards with the issue name and link.
-
-### `chat_functions.py`
-
-A separate file to hold helper methods related to messaging. Mostly just for
-organisational purposes. Currently just holds `send_text_to_room`, a helper
-method for sending formatted messages to a room.
-
-### `errors.py`
-
-Custom error types for the bot. Currently there's only one special type that's
-defined for when a error is found while the config file is being processed.
-
-### `sample.config.yaml`
-
-The sample configuration file. People running your bot should be advised to
-copy this file to `config.yaml`, then edit it according to their needs. Be sure
-never to check the edited `config.yaml` into source control since it'll likely
-contain sensitive details like passwords!
-
-## Questions?
-
-Any questions? Ask in
-[#nio-template:amorgan.xyz](https://matrix.to/#/!vmWBOsOkoOtVHMzZgN:amorgan.xyz?via=amorgan.xyz)!
+This template is also based on [matrix-nio](https://github.com/poljar/matrix-nio). 
