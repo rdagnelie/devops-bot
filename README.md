@@ -2,7 +2,7 @@
 
 ## Bot interactions with network
 
-### [DONE] - ```!ping google.fr 3```
+#### [DONE] - ```!ping google.fr 3```
 ```
 
 timestamp: 2020-04-13 23:51:33
@@ -23,7 +23,7 @@ packet_duplicate_rate: 0.0
     * https://github.com/deajan/tcpping/blob/master/tcpping
     * http://www.hping.org/ hping3
 
-### [DONE] - ```!reach google.fr```
+#### [DONE] - ```!reach google.fr```
 ```
 timestamp: 2020-04-13 23:54:20.396937
 url-target: https://google.fr
@@ -36,7 +36,7 @@ redirect-count: 1
 cert-health-(1=KO): 0
 ```
 
-### [DONE] - ```!mbox or !mailbox``` AND ```!mbox clearall or !mailbox clearall```
+#### [DONE] - ```!mbox or !mailbox``` AND ```!mbox clearall or !mailbox clearall```
 ```
 !mbox
 2020-04-12 11:15:43+02:00: ${subject}
@@ -51,19 +51,19 @@ mailbox ${MAILBOXNAME} (${FOLDER_SELECTED}) has been cleared !
 :):):) 0 mails in the mailbox in the last 24h ${MAILBOXNAME} (${FOLDER_SELECTED})
 ```
 
-### TODO - ```!scan IP.IP.IP.IP 22,80,443```
+#### TODO - ```!scan IP.IP.IP.IP 22,80,443```
 
 It should give you clear overview if port is filtered with firewall,not routed or closed. 
 Nmap binary shoud be fine with a lot of options
 
 ## Bot interactions with compute
 
-### [DONE] - ```!uh or !uhash or !user_hash" or !userhash```
+#### [DONE] - ```!uh or !uhash or !user_hash" or !userhash```
 ``` $6$rounds=656000$x7XatslsbOoLxesw$ZV3Ju24qp47JEsubyB7CJ8eI2l8mE3L1DSee345lrdZ2doVZunXXhkw3kISrLk9vEvU2mXuL5SHyrbOnvUoGT1 ### .|\Wr|.ImO{$+6/5 ```
 
 Return Linux standard hash password and after ### the clear password associated
 
-### [DONE] - ```!mh or !mhash or !mysql_hash" or !mysqlhash```
+#### [DONE] - ```!mh or !mhash or !mysql_hash" or !mysqlhash```
 ``` $5$rounds=535000$XP.V8wNQ3ium8AC8$sDXC4ib5RNTuTi/Or55kYaxxRm1pRCbhw/da435A.v4 ### ;A4EigyiqcpZ^DZ& ```
 
 Return mysql 8.X hash password and after ### the clear password associated
