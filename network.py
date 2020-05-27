@@ -160,3 +160,11 @@ def network_mailbox(action):
                     + config.mailbox_folder
                     + ")"
                 )
+
+def network_cloudstate(cloudname):
+    config = Config("config.yaml")
+    if cloudname in ("azr","azure","microsoft"):
+        result = requests.get(config.healthcheck_api_azure, timeout=2).json()["status"]
+        return("AZURE:"+str(result))
+    if cloudname is "all":
+        return("not yet implemented")

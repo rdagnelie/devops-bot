@@ -1,8 +1,6 @@
 matrix-nio>=0.8.0
 Markdown>=3.1.1
 PyYAML>=5.1.2
-
-#Augments
 pingparsing == 1.0.1
 requests == 2.22.0
 pycurl == 7.43.0.5

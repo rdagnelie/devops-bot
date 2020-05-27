@@ -39,6 +39,8 @@ class Command(object):
             await self._network_mailbox()
         elif self.command.startswith(("bjm", "bonjourmadame")):
             await self._network_bonjourmadame()
+        elif self.command.startswith(("health","h")):
+            await self._network_cloudstate()
         elif self.command.startswith(("uh", "uhash", "user_hash", "userhash")):
             await self._compute_uhash()
         elif self.command.startswith(("mh", "mhash", "mysql_hash", "mysqlhash")):
@@ -94,12 +96,20 @@ class Command(object):
     async def _network_bonjourmadame(self):
         """ get image URL from bonjourmadame site """
         if self.args:
-            if self.args[0] in ["random", "latest"]:
+            if self.args[0] in ("random", "latest"):
                 response = network.network_bonjourmadame(self.args[0])
         else:
             response = network.network_bonjourmadame("random")
         await send_text_to_room(self.client, self.room.room_id, response)
 
+    async def _network_cloudstate(self):
+        """ get public cloud health"""
+        network.network_cloudstate(self.args[0])
+        if self.args:
+            response = network.network_cloudstate(self.args[0])
+        else:
+            response = network.network_cloudstate("all")
+        await send_text_to_room(self.client, self.room.room_id, response)
     async def _compute_uhash(self):
         response = ""
         if self.args and self.args[0].isnumeric():

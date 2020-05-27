@@ -77,6 +77,8 @@ class Config(object):
         self.bonjourmadame_url_api = self._get_cfg(["bonjourmadame", "url_api"], required=False,default=False)
         self.bonjourmadame_blacklist_pics = self._get_cfg(["bonjourmadame", "blacklist_pictures"], required=False,default=False)
 
+        # Healthcheck public cloud url
+        self.healthcheck_api_azure = self._get_cfg(["healthcheck_api", "azure"], required=False,default=False)
 
     def _get_cfg(
             self,
